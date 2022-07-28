@@ -1,0 +1,191 @@
+var data_avr_all_time = [["Name", "Average voting rate"]];
+var data_inverse_gini_all_time = [["Name", "Average Gini coefficient"]];
+var data_avr_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
+var data_inverse_gini_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
+var data_price_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
+var data_volume_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
+
+const data = JSON.parse(document.getElementById("data").textContent);
+for (let data_dao of data) {
+  data_avr_all_time.push([data_dao["name"], data_dao["average_voting_rate_all_time"]]);
+  data_inverse_gini_all_time.push([data_dao["name"], data_dao["average_inverse_gini_all_time"]]);
+
+  data_avr_over_time_dao = [data_dao["name"]];
+  data_inverse_gini_over_time_dao = [data_dao["name"]];
+  data_price_over_time_dao = [data_dao["name"]];
+  data_volume_over_time_dao = [data_dao["name"]];
+
+  // We use the same number of periods for each of graphs
+  let num_periods = data_dao["average_voting_rates"].length
+
+  for (let i = 0; i < num_periods; i++) {
+    data_avr_over_time_dao.push(data_dao["average_voting_rates"][i]);
+    data_inverse_gini_over_time_dao.push(data_dao["average_inverse_ginis"][i]);
+    if (i < data_dao["average_prices"].length) {
+      data_price_over_time_dao.push(data_dao["average_prices"][i]);
+    }
+    if (i < data_dao["average_volumes"].length) {
+      data_volume_over_time_dao.push(data_dao["average_volumes"][i]);
+    }
+  }
+  data_avr_over_time.push(data_avr_over_time_dao);
+  data_inverse_gini_over_time.push(data_inverse_gini_over_time_dao);
+
+  // Not all DAOs have available market data
+  if (data_price_over_time_dao.length - 1 == num_periods) {
+    data_price_over_time.push(data_price_over_time_dao);
+    console.log(data_dao["name"]);
+    console.log(data_price_over_time_dao);
+  }
+  if (data_volume_over_time_dao.length - 1 == num_periods) {
+    data_volume_over_time.push(data_volume_over_time_dao);
+  }
+}
+
+function drawGraphs() {
+  new google.visualization.BarChart(
+    document.getElementById("chart_div_avr_all_time")
+  ).draw(
+    google.visualization.arrayToDataTable(data_avr_all_time),
+    {
+      title: "Average Voting Rate by DAOs (All-Time)",
+      width: 600,
+      height: 400,
+      hAxis: {
+        title: "Average voting rate (%)",
+        minValue: 0,
+        scaleType: 'log',
+      },
+      legend: { position: "none" },
+    }
+  );
+
+  // Transpose data
+  // https://stackoverflow.com/questions/17428587/transposing-a-2d-array-in-javascript
+  data_avr_over_time = data_avr_over_time[0].map((col, i) =>
+    data_avr_over_time.map((row) => row[i])
+  );
+
+  new google.visualization.LineChart(
+    document.getElementById("chart_div_avr_over_time")
+  ).draw(
+    google.visualization.arrayToDataTable(data_avr_over_time),
+    {
+      title: "DAO Voting Rate Over Time",
+      width: 600,
+      height: 400,
+      hAxis: {
+        title: "Time (in days)",
+        minValue: 0,
+      },
+      vAxis: {
+        title: "Average voting rate (%)",
+        scaleType: 'log',
+      },
+      legend: { position: "bottom" },
+      curveType: "function",
+    }
+  );
+
+  new google.visualization.BarChart(
+    document.getElementById("chart_div_inverse_gini_all_time")
+  ).draw(
+    google.visualization.arrayToDataTable(data_inverse_gini_all_time),
+    {
+      title: "Average Inverse Gini Coefficient for Participation by DAOs (All-Time)",
+      width: 600,
+      height: 400,
+      hAxis: {
+        title: "Average Inverse Gini Coefficient",
+        minValue: 0,
+        scaleType: 'log',
+      },
+      legend: { position: "none" },
+    }
+  );
+
+  // Transpose data
+  // https://stackoverflow.com/questions/17428587/transposing-a-2d-array-in-javascript
+  data_inverse_gini_over_time = data_inverse_gini_over_time[0].map((col, i) =>
+    data_inverse_gini_over_time.map((row) => row[i])
+  );
+
+  new google.visualization.LineChart(
+    document.getElementById("chart_div_inverse_gini_over_time")
+  ).draw(
+    google.visualization.arrayToDataTable(data_inverse_gini_over_time),
+    {
+      title: "Inverse Gini Coefficient for Participation Over Time",
+      width: 600,
+      height: 400,
+      hAxis: {
+        title: "Time (in days)",
+        minValue: 0,
+      },
+      vAxis: {
+        title: "Inverse Gini Coefficient",
+        scaleType: 'log',
+      },
+      legend: { position: "bottom" },
+      curveType: "function",
+    }
+  );
+
+  // Transpose data
+  // https://stackoverflow.com/questions/17428587/transposing-a-2d-array-in-javascript
+  data_price_over_time = data_price_over_time[0].map((col, i) =>
+    data_price_over_time.map((row) => row[i])
+  );
+
+  new google.visualization.LineChart(
+    document.getElementById("chart_div_price_over_time")
+  ).draw(
+    google.visualization.arrayToDataTable(data_price_over_time),
+    {
+      title: "DAO Token Prices Over Time",
+      width: 600,
+      height: 400,
+      hAxis: {
+        title: "Time (in days)",
+        minValue: 0,
+      },
+      vAxis: {
+        title: "Average price (USD)",
+      },
+      legend: { position: "bottom" },
+      curveType: "function",
+    }
+  );
+
+  // Transpose data
+  // https://stackoverflow.com/questions/17428587/transposing-a-2d-array-in-javascript
+  data_volume_over_time = data_volume_over_time[0].map((col, i) =>
+    data_volume_over_time.map((row) => row[i])
+  );
+
+  new google.visualization.LineChart(
+    document.getElementById("chart_div_volume_over_time")
+  ).draw(
+    google.visualization.arrayToDataTable(data_volume_over_time),
+    {
+      title: "DAO Token Volumes Over Time",
+      width: 600,
+      height: 400,
+      hAxis: {
+        title: "Time (in days)",
+        minValue: 0,
+      },
+      vAxis: {
+        title: "Average volume",
+      },
+      legend: { position: "bottom" },
+      curveType: "function",
+    }
+  );
+}
+
+// Load the Visualization API and the corechart package.
+google.charts.load("current", { packages: ["corechart", "bar"] });
+
+// Set a callback to run when the Google Visualization API is loaded.
+google.charts.setOnLoadCallback(drawGraphs);
