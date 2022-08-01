@@ -2,7 +2,7 @@
 
 ## Setup and Installation
 
-Running the dashboard in your local environment requires Python 3+. It is highly recommended that you setup and run the dashboard within a virtual environment. In order to install Python 3 and create a virtual environment, we highly recommend following ![https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-programming-environment-on-an-ubuntu-20-04-server](this guide).
+Running the dashboard in your local environment requires Python 3+. It is highly recommended that you setup and run the dashboard within a virtual environment. In order to install Python 3 and create a virtual environment, we highly recommend following [this guide](https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-programming-environment-on-an-ubuntu-20-04-server).
 
 To begin, clone this GitHub repository to your local computer and navigate to the project root:
 
@@ -37,4 +37,4 @@ Then, run the following command to create and set up the database:
 python manage.py migrate
 `
 
-Finally, you can load the dashboard. Open the dashboard in the browser at [http://localhost:8000](). 
+Finally, you can load the dashboard. Open the dashboard in the browser at [](http://localhost:8000). 
