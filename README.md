@@ -37,4 +37,4 @@ Then, run the following command to create and set up the database:
 python manage.py migrate
 `
 
-Finally, you can load the dashboard. Open the dashboard in the browser at [](http://localhost:8000). 
+Finally, you can load the dashboard. Open the dashboard in the browser at http://localhost:8000. 
