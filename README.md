@@ -8,6 +8,7 @@ To begin, clone this GitHub repository to your local computer and navigate to th
 
 `
 git clone https://github.com/rickygv99/dashboard.git  
+
 cd dashboard
 `
 
@@ -15,6 +16,7 @@ Then, run the following commands to install necessary dependencies:
 
 `
 pip install --upgrade pip  
+
 pip install -r requirements.txt
 `
 
