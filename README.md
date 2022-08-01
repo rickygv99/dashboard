@@ -7,14 +7,14 @@ Running the dashboard in your local environment requires Python 3+. It is highly
 To begin, clone this GitHub repository to your local computer and navigate to the project root:
 
 `
-git clone https://github.com/rickygv99/dashboard.git
+git clone https://github.com/rickygv99/dashboard.git  
 cd dashboard
 `
 
 Then, run the following commands to install necessary dependencies:
 
 `
-pip install --upgrade pip
+pip install --upgrade pip  
 pip install -r requirements.txt
 `
 
