@@ -1,4 +1,16 @@
-.DS_Store
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local database
 db.sqlite3
-/__pycache__/
+
+# Environments
 .env
+.venv
+env/
+venv/
+
+# MacOS-specific files
+.DS_Store

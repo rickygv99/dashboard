@@ -1,0 +1,7 @@
+{
+  "name": "DAO research dashboard",
+  "description": "Dashboard for conducting research on DAO governance",
+  "image": "heroku/python",
+  "repository": "https://github.com/rickygv99/dashboard",
+  "keywords": ["dao", "dashboard", "governance"]
+}
