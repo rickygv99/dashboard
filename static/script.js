@@ -4,6 +4,7 @@ var data_avr_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
 var data_inverse_gini_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
 var data_price_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
 var data_volume_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
+var data_components = [["nf1", "nf2"]];
 
 const data = JSON.parse(document.getElementById("data").textContent);
 for (let data_dao of data) {
@@ -34,11 +35,12 @@ for (let data_dao of data) {
   // Not all DAOs have available market data
   if (data_price_over_time_dao.length - 1 == num_periods) {
     data_price_over_time.push(data_price_over_time_dao);
-    console.log(data_dao["name"]);
-    console.log(data_price_over_time_dao);
   }
   if (data_volume_over_time_dao.length - 1 == num_periods) {
     data_volume_over_time.push(data_volume_over_time_dao);
+  }
+  if (data_dao["components"].length == 2) {
+    data_components.push(data_dao["components"]);
   }
 }
 
@@ -184,6 +186,24 @@ function drawGraphs() {
       curveType: "function",
     }
   );
+
+  new google.visualization.ScatterChart(
+    document.getElementById('chart_principal_components')
+  ).draw(
+    google.visualization.arrayToDataTable(data_components),
+    {
+      title "DAO Principal Components (n = 2)",
+      width: 600,
+      height: 600,
+      hAxis: {
+        title: "nf1",
+      },
+      vAxis: {
+        title: "nf2",
+      },
+      legend: "none"
+    };
+  )
 }
 
 // Load the Visualization API and the corechart package.
