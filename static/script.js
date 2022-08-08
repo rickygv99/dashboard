@@ -201,9 +201,9 @@ function drawGraphs() {
       vAxis: {
         title: "nf2",
       },
-      legend: "none"
-    };
-  )
+      legend: "none",
+    }
+  );
 }
 
 // Load the Visualization API and the corechart package.
