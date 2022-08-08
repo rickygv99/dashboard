@@ -54,7 +54,7 @@ DAO_DATA = [
         "decimals": 18,
         "snapshot_space": "gitcoindao.eth",
         "coinapi_symbol": ""
-    }
+    },
 ]
 
 NEW_DAO_DATA = [
@@ -62,7 +62,217 @@ NEW_DAO_DATA = [
         "name": "Bankless DAO",
         "address": "0x844e211e291077B11221c0F18615a64F2Ff19c26",
         "decimals": 18,
-        "snapshot_space": "bankless.eth",
+        "snapshot_space": "banklessvault.eth",
         "coinapi_symbol": ""
-    }
+    },
+    {
+        "name": "Proof of Humanity",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "poh.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "Curve Finance",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "curve.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "Decentraland",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "snapshot.dcl.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "dYdX",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "dydxgov.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "Optimism Collective",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "opcollective.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "Balancer",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "balancer.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "GuruDAO Bootstrap Phase",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "thegurudao.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "xDai Chain (Gnosis Chain)",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "xdaistake.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "The Graph",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "graphprotocol.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "BadgerDAO",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "badgerdao.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "Aavegotchi",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "aavegotchi.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "Loot Owners",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "loot-dao.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "Qi Dao | Mai.Finance",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "qidao.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "ParaSwap DAO",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "paraswap-dao.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "GnosisDAO",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "gnosis.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "Beefy",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "beefydao.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "Illuvinati Governance",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "ilvgov.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "yearn",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "ybaby.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "MutantCats DAO",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "mutantsdao.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "Rarible Protocol DAO",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "rarible.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "CityDAO",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "daocity.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "Trust Wallet",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "trustwallet",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "Doodles",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "doodles.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "Bancor",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "bancornetwork.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "Developer DAO",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "devdao.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "ApeCoin DAO",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "apecoin.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "ShapeShift",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "shapeshiftdao.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "Friends With Benefits Pro",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "friendswithbenefits.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "Fei",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "fei.eth",
+        "coinapi_symbol": ""
+    },
+    {
+        "name": "MASK",
+        "address": "",
+        "decimals": "",
+        "snapshot_space": "masknetwork.eth",
+        "coinapi_symbol": ""
+    },
 ]
