@@ -151,6 +151,7 @@ function drawGraphs() {
       },
       vAxis: {
         title: "Average price (USD)",
+        scaleType: 'log',
       },
       legend: { position: "bottom" },
       curveType: "function",
@@ -177,6 +178,7 @@ function drawGraphs() {
       },
       vAxis: {
         title: "Average volume",
+        scaleType: 'log',
       },
       legend: { position: "bottom" },
       curveType: "function",
