@@ -55,9 +55,6 @@ DAO_DATA = [
         "snapshot_space": "gitcoindao.eth",
         "coinapi_symbol": ""
     },
-]
-
-NEW_DAO_DATA = [
     {
         "name": "Bankless",
         "address": "0x2d94AA3e47d9D5024503Ca8491fcE9A2fB4DA198",

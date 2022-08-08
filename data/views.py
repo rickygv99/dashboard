@@ -7,7 +7,7 @@ import json
 import logging
 import requests
 
-from .utils import DAO_DATA
+from .dao_ids import DAO_DATA
 
 ETHERSCAN_API_KEY = config('ETHERSCAN_API_KEY')
 COIN_API_KEY = config('COIN_API_KEY')
@@ -209,20 +209,24 @@ def loadOnchainData():
     return data
 
 REFRESH_OFFCHAIN_DATA = False
-ADD_NEW_OFFCHAIN_DATA = True
 
 def index(request):
     data = []
 
     if REFRESH_OFFCHAIN_DATA:
         data = queryAllDaos(DAO_DATA)
-        saveOffchainData(data)
     else:
         data = loadOffchainData()
 
-    if ADD_NEW_OFFCHAIN_DATA:
-        # TODO: Fill in saving / extending of data here
-        pass
+        daos_to_query = []
+        for dao in DAO_DATA:
+            if not any(d['name'] == dao['name'] for d in data):
+                daos_to_query.append(dao)
+
+        new_data = queryAllDaos(daos_to_query)
+        data.extend(new_data)
+
+    saveOffchainData(data)
 
     onchain_data = loadOnchainData()
     data.extend(onchain_data)
