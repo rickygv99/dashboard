@@ -91,20 +91,6 @@ DAO_DATA = [
         "coinapi_symbol": ""
     },
     {
-        "name": "xDai Chain (STAKE)",
-        "address": "0x0Ae055097C6d159879521C384F1D2123D1f195e6",
-        "decimals": 18,
-        "snapshot_space": "xdaistake.eth",
-        "coinapi_symbol": ""
-    },
-    {
-        "name": "The Graph",
-        "address": "0xc944E90C64B2c07662A292be6244BDf05Cda44a7",
-        "decimals": 18,
-        "snapshot_space": "graphprotocol.eth",
-        "coinapi_symbol": ""
-    },
-    {
         "name": "Badger",
         "address": "0x3472A5A71965499acd81997a54BBA8D852C6E53d",
         "decimals": 18,
@@ -151,13 +137,6 @@ DAO_DATA = [
         "address": "0xaAdBA140Ae5e4c8a9eF0Cc86EA3124b446e3E46A",
         "decimals": 1, # NFT
         "snapshot_space": "mutantsdao.eth",
-        "coinapi_symbol": ""
-    },
-    {
-        "name": "CityDAO Citizenship",
-        "address": "0x7EeF591A6CC0403b9652E98E88476fe1bF31dDeb",
-        "decimals": 1, # NFT
-        "snapshot_space": "daocity.eth",
         "coinapi_symbol": ""
     },
     {
