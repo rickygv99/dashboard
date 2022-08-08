@@ -39,9 +39,9 @@ for (let data_dao of data) {
   if (data_volume_over_time_dao.length - 1 == num_periods) {
     data_volume_over_time.push(data_volume_over_time_dao);
   }
-  if (data_dao["components"].length == 2) {
-    data_components.push(data_dao["components"]);
-  }
+  //if (data_dao["components"].length == 2) {
+  //  data_components.push(data_dao["components"]);
+  //}
 }
 
 function drawGraphs() {
@@ -184,24 +184,6 @@ function drawGraphs() {
       },
       legend: { position: "bottom" },
       curveType: "function",
-    }
-  );
-
-  new google.visualization.ScatterChart(
-    document.getElementById('chart_principal_components')
-  ).draw(
-    google.visualization.arrayToDataTable(data_components),
-    {
-      title: "DAO Principal Components (n = 2)",
-      width: 600,
-      height: 600,
-      hAxis: {
-        title: "nf1",
-      },
-      vAxis: {
-        title: "nf2",
-      },
-      legend: "none",
     }
   );
 }
