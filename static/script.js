@@ -50,7 +50,7 @@ function drawGraphs() {
     {
       title: "Average Voting Rate by DAOs (All-Time)",
       width: 600,
-      height: 400,
+      height: 600,
       hAxis: {
         title: "Average voting rate (%)",
         minValue: 0,
@@ -73,7 +73,7 @@ function drawGraphs() {
     {
       title: "DAO Voting Rate Over Time",
       width: 600,
-      height: 400,
+      height: 600,
       hAxis: {
         title: "Time (in days)",
         minValue: 0,
@@ -94,7 +94,7 @@ function drawGraphs() {
     {
       title: "Average Inverse Gini Coefficient for Participation by DAOs (All-Time)",
       width: 600,
-      height: 400,
+      height: 600,
       hAxis: {
         title: "Average Inverse Gini Coefficient",
         minValue: 0,
@@ -117,7 +117,7 @@ function drawGraphs() {
     {
       title: "Inverse Gini Coefficient for Participation Over Time",
       width: 600,
-      height: 400,
+      height: 600,
       hAxis: {
         title: "Time (in days)",
         minValue: 0,
@@ -144,7 +144,7 @@ function drawGraphs() {
     {
       title: "DAO Token Prices Over Time",
       width: 600,
-      height: 400,
+      height: 600,
       hAxis: {
         title: "Time (in days)",
         minValue: 0,
@@ -170,7 +170,7 @@ function drawGraphs() {
     {
       title: "DAO Token Volumes Over Time",
       width: 600,
-      height: 400,
+      height: 600,
       hAxis: {
         title: "Time (in days)",
         minValue: 0,
