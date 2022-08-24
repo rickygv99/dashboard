@@ -4,7 +4,7 @@ var data_avr_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
 var data_inverse_gini_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
 var data_price_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
 var data_volume_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
-var data_components = [["nf1", "nf2"]];
+var data_components = [["nf1", "nf2", {role: "annotation"}]];
 
 const data = JSON.parse(document.getElementById("data").textContent);
 for (let data_dao of data) {
@@ -40,6 +40,7 @@ for (let data_dao of data) {
     data_volume_over_time.push(data_volume_over_time_dao);
   }
   if (data_dao["components"].length == 2) {
+    data_dao["components"].push(data_dao["name"])
     data_components.push(data_dao["components"]);
   }
 }
