@@ -57,6 +57,33 @@ function createFilterSettings() {
 window.onload=createFilterSettings();
 
 
+function toggleDropdown() {
+  document.getElementById("sortDropdownContent").classList.toggle("show");
+}
+
+window.onclick = function(event) {
+  if (!event.target.matches(".sortButton")) {
+    var dropdowns = document.getElementsByClassName("sortDropdownContent");
+    for (let k = 0; k < dropdowns.length; k++) {
+      if (dropdowns[i].classList.contains("show")) {
+        dropdowns[i].classList.remove("show");
+      }
+    }
+  }
+}
+
+
+function sortAZ() {
+  visibleData.sort();
+  drawGraphs();
+}
+
+function sortZA() {
+  visibleData = visibleData.sort().reverse();
+  drawGraphs();
+}
+
+
 function drawGraphs() {
   var data_avr_all_time = [["Name", "Average voting rate"]];
   var data_inverse_gini_all_time = [["Name", "Average Gini coefficient"]];
@@ -123,6 +150,7 @@ function drawGraphs() {
       hAxis: {
         title: "Average voting rate (%)",
         minValue: 0,
+        maxValue: 100,
         scaleType: 'log',
       },
       legend: { position: "none" },
