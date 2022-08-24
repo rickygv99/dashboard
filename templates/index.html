@@ -5,7 +5,7 @@
 {{ data|json_script:"data" }}
 
 {% load static %}
-<script type="text/javascript" src="{% static 'script.js' %}"></script>
+<script type="text/javascript" src="{% static 'script.js' %}" defer></script>
 
 {% endblock %}
 

@@ -228,21 +228,19 @@ google.charts.setOnLoadCallback(drawGraphs);
 function createFilterSettings() {
   var checkboxesDivElement = document.getElementById("filterCheckboxes");
   for (let data_dao of data) {
-    var filterCheckbox = document.createElement("input");
+    let filterCheckbox = document.createElement("input");
     filterCheckbox.type = "checkbox";
     filterCheckbox.id = "checkbox_" + data_dao["name"];
     filterCheckbox.name = data_dao["name"];
     filterCheckbox.value = data_dao["name"];
 
-    var filterCheckboxLabel = document.createElement("label");
+    let filterCheckboxLabel = document.createElement("label");
     filterCheckboxLabel.htmlFor = "checkbox_" + data_dao["name"];
     filterCheckboxLabel.appendChild(document.createTextNode(data_dao["name"]));
 
-    var br = document.createElement("br");
-
     checkboxesDivElement.appendChild(filterCheckbox);
     checkboxesDivElement.appendChild(filterCheckboxLabel);
-    checkboxesDivElement.appendChild(br);
+    checkboxesDivElement.appendChild(document.createElement("br"));
   }
 }
 
