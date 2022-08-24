@@ -65,8 +65,8 @@ window.onclick = function(event) {
   if (!event.target.matches(".sortButton")) {
     var dropdowns = document.getElementsByClassName("sortDropdownContent");
     for (let k = 0; k < dropdowns.length; k++) {
-      if (dropdowns[i].classList.contains("show")) {
-        dropdowns[i].classList.remove("show");
+      if (dropdowns[k].classList.contains("show")) {
+        dropdowns[k].classList.remove("show");
       }
     }
   }
@@ -150,7 +150,6 @@ function drawGraphs() {
       hAxis: {
         title: "Average voting rate (%)",
         minValue: 0,
-        maxValue: 100,
         scaleType: 'log',
       },
       legend: { position: "none" },
