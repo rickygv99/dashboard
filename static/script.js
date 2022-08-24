@@ -1,3 +1,7 @@
+const GRAPH_WIDTH = 400;
+const GRAPH_HEIGHT = 400;
+
+
 function openFilterSettings() {
   document.getElementById("filterSettings").style.width = "250px";
   document.getElementById("content").style.marginLeft = "250px";
@@ -99,8 +103,12 @@ function drawGraphs() {
       data_volume_over_time.push(data_volume_over_time_dao);
     }
     if (data_dao["components"].length == 2) {
-      data_dao["components"].push(data_dao["name"])
-      data_components.push(data_dao["components"]);
+      let components = []
+      for (let j = 0; j < 2; j++) {
+        components.push(data_dao["components"][j])
+      }
+      components.push(data_dao["name"])
+      data_components.push(components);
     }
   }
 
@@ -110,8 +118,8 @@ function drawGraphs() {
     google.visualization.arrayToDataTable(data_avr_all_time),
     {
       title: "Average Voting Rate by DAOs (All-Time)",
-      width: 600,
-      height: 600,
+      width: GRAPH_WIDTH,
+      height: GRAPH_HEIGHT,
       hAxis: {
         title: "Average voting rate (%)",
         minValue: 0,
@@ -133,8 +141,8 @@ function drawGraphs() {
     google.visualization.arrayToDataTable(data_avr_over_time),
     {
       title: "DAO Voting Rate Over Time",
-      width: 600,
-      height: 600,
+      width: GRAPH_WIDTH,
+      height: GRAPH_HEIGHT,
       hAxis: {
         title: "Time (in days)",
         minValue: 0,
@@ -154,8 +162,8 @@ function drawGraphs() {
     google.visualization.arrayToDataTable(data_inverse_gini_all_time),
     {
       title: "Average Inverse Gini Coefficient for Participation by DAOs (All-Time)",
-      width: 600,
-      height: 600,
+      width: GRAPH_WIDTH,
+      height: GRAPH_HEIGHT,
       hAxis: {
         title: "Average Inverse Gini Coefficient",
         minValue: 0,
@@ -177,8 +185,8 @@ function drawGraphs() {
     google.visualization.arrayToDataTable(data_inverse_gini_over_time),
     {
       title: "Inverse Gini Coefficient for Participation Over Time",
-      width: 600,
-      height: 600,
+      width: GRAPH_WIDTH,
+      height: GRAPH_HEIGHT,
       hAxis: {
         title: "Time (in days)",
         minValue: 0,
@@ -204,8 +212,8 @@ function drawGraphs() {
     google.visualization.arrayToDataTable(data_price_over_time),
     {
       title: "DAO Token Prices Over Time",
-      width: 600,
-      height: 600,
+      width: GRAPH_WIDTH,
+      height: GRAPH_HEIGHT,
       hAxis: {
         title: "Time (in days)",
         minValue: 0,
@@ -231,8 +239,8 @@ function drawGraphs() {
     google.visualization.arrayToDataTable(data_volume_over_time),
     {
       title: "DAO Token Volumes Over Time",
-      width: 600,
-      height: 600,
+      width: GRAPH_WIDTH,
+      height: GRAPH_HEIGHT,
       hAxis: {
         title: "Time (in days)",
         minValue: 0,
@@ -252,8 +260,8 @@ function drawGraphs() {
     google.visualization.arrayToDataTable(data_components),
     {
       title: "DAO Principal Components",
-      width: 600,
-      height: 600,
+      width: GRAPH_WIDTH,
+      height: GRAPH_HEIGHT,
       hAxis: {
         title: "n1",
       },
