@@ -80,10 +80,14 @@ function sortAZ() {
   }
   names.sort();
 
+  console.log(names);
+
   let dataSorted = []
   while (names.length > 0) {
     for (let data_dao of data) {
       let next_name = names.shift();
+      console.log(data_dao["name"]);
+      console.log(next_name);
       if (data_dao["name"] === next_name) {
         dataSorted.push(data_dao);
         break;
