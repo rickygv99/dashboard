@@ -91,10 +91,14 @@ function sortAZ() {
     }
   }
 
+  console.log(dataSorted);
+
   data = [];
   for (let data_dao of dataSorted) {
     data.push(data_dao);
   }
+
+  console.log(data);
 
   drawGraphs();
 }
