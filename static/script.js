@@ -9,54 +9,101 @@ function closeFilterSettings() {
 }
 
 
-var data_avr_all_time = [["Name", "Average voting rate"]];
-var data_inverse_gini_all_time = [["Name", "Average Gini coefficient"]];
-var data_avr_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
-var data_inverse_gini_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
-var data_price_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
-var data_volume_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
-var data_components = [["nf1", "nf2", {role: "annotation"}]];
-
 const data = JSON.parse(document.getElementById("data").textContent);
+
+var visibleData = [];
 for (let data_dao of data) {
-  data_avr_all_time.push([data_dao["name"], data_dao["average_voting_rate_all_time"]]);
-  data_inverse_gini_all_time.push([data_dao["name"], data_dao["average_inverse_gini_all_time"]]);
+  visibleData.push(data_dao["name"]);
+}
 
-  data_avr_over_time_dao = [data_dao["name"]];
-  data_inverse_gini_over_time_dao = [data_dao["name"]];
-  data_price_over_time_dao = [data_dao["name"]];
-  data_volume_over_time_dao = [data_dao["name"]];
 
-  // We use the same number of periods for each of graphs
-  let num_periods = data_dao["average_voting_rates"].length
-
-  for (let i = 0; i < num_periods; i++) {
-    data_avr_over_time_dao.push(data_dao["average_voting_rates"][i]);
-    data_inverse_gini_over_time_dao.push(data_dao["average_inverse_ginis"][i]);
-    if (i < data_dao["average_prices"].length) {
-      data_price_over_time_dao.push(data_dao["average_prices"][i]);
+function createFilterSettings() {
+  var checkboxesDivElement = document.getElementById("filterCheckboxes");
+  for (let data_dao of data) {
+    let filterCheckbox = document.createElement("input");
+    filterCheckbox.type = "checkbox";
+    filterCheckbox.id = "checkbox_" + data_dao["name"];
+    filterCheckbox.className = "filterCheckbox";
+    filterCheckbox.name = data_dao["name"];
+    filterCheckbox.value = data_dao["name"];
+    if (visibleData.includes(data_dao["name"])) {
+      filterCheckbox.checked = true;
+    } else {
+      filterCheckbox.checked = false;
     }
-    if (i < data_dao["average_volumes"].length) {
-      data_volume_over_time_dao.push(data_dao["average_volumes"][i]);
-    }
-  }
-  data_avr_over_time.push(data_avr_over_time_dao);
-  data_inverse_gini_over_time.push(data_inverse_gini_over_time_dao);
+    filterCheckbox.addEventListener("click", function() {
+      if (visibleData.includes(this.value)) {
+        visibleData = visibleData.filter(val => val !== this.value);
+      } else {
+        visibleData.push(this.value);
+      }
+      drawGraphs();
+    });
 
-  // Not all DAOs have available market data
-  if (data_price_over_time_dao.length - 1 == num_periods) {
-    data_price_over_time.push(data_price_over_time_dao);
-  }
-  if (data_volume_over_time_dao.length - 1 == num_periods) {
-    data_volume_over_time.push(data_volume_over_time_dao);
-  }
-  if (data_dao["components"].length == 2) {
-    data_dao["components"].push(data_dao["name"])
-    data_components.push(data_dao["components"]);
+    let filterCheckboxLabel = document.createElement("label");
+    filterCheckboxLabel.htmlFor = "checkbox_" + data_dao["name"];
+    filterCheckboxLabel.appendChild(document.createTextNode(data_dao["name"]));
+
+    checkboxesDivElement.appendChild(filterCheckbox);
+    checkboxesDivElement.appendChild(filterCheckboxLabel);
+    checkboxesDivElement.appendChild(document.createElement("br"));
   }
 }
 
+window.onload=createFilterSettings();
+
+
 function drawGraphs() {
+  var data_avr_all_time = [["Name", "Average voting rate"]];
+  var data_inverse_gini_all_time = [["Name", "Average Gini coefficient"]];
+  var data_avr_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
+  var data_inverse_gini_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
+  var data_price_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
+  var data_volume_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
+  var data_components = [["nf1", "nf2", {role: "annotation"}]];
+
+  for (let data_dao of data) {
+    if (visibleData.includes(data_dao["name"]) == false) {
+      continue;
+    }
+
+    data_avr_all_time.push([data_dao["name"], data_dao["average_voting_rate_all_time"]]);
+    data_inverse_gini_all_time.push([data_dao["name"], data_dao["average_inverse_gini_all_time"]]);
+
+    data_avr_over_time_dao = [data_dao["name"]];
+    data_inverse_gini_over_time_dao = [data_dao["name"]];
+    data_price_over_time_dao = [data_dao["name"]];
+    data_volume_over_time_dao = [data_dao["name"]];
+
+    // We use the same number of periods for each of graphs
+    let num_periods = data_dao["average_voting_rates"].length
+
+    for (let i = 0; i < num_periods; i++) {
+      data_avr_over_time_dao.push(data_dao["average_voting_rates"][i]);
+      data_inverse_gini_over_time_dao.push(data_dao["average_inverse_ginis"][i]);
+      if (i < data_dao["average_prices"].length) {
+        data_price_over_time_dao.push(data_dao["average_prices"][i]);
+      }
+      if (i < data_dao["average_volumes"].length) {
+        data_volume_over_time_dao.push(data_dao["average_volumes"][i]);
+      }
+    }
+    data_avr_over_time.push(data_avr_over_time_dao);
+    data_inverse_gini_over_time.push(data_inverse_gini_over_time_dao);
+
+    // Not all DAOs have available market data
+    if (data_price_over_time_dao.length - 1 == num_periods) {
+      data_price_over_time.push(data_price_over_time_dao);
+    }
+    if (data_volume_over_time_dao.length - 1 == num_periods) {
+      data_volume_over_time.push(data_volume_over_time_dao);
+    }
+    if (data_dao["components"].length == 2) {
+      data_dao["components"].push(data_dao["name"])
+      data_components.push(data_dao["components"]);
+    }
+  }
+
   new google.visualization.BarChart(
     document.getElementById("chart_div_avr_all_time")
   ).draw(
@@ -223,25 +270,3 @@ google.charts.load("current", { packages: ["corechart", "bar"] });
 
 // Set a callback to run when the Google Visualization API is loaded.
 google.charts.setOnLoadCallback(drawGraphs);
-
-
-function createFilterSettings() {
-  var checkboxesDivElement = document.getElementById("filterCheckboxes");
-  for (let data_dao of data) {
-    let filterCheckbox = document.createElement("input");
-    filterCheckbox.type = "checkbox";
-    filterCheckbox.id = "checkbox_" + data_dao["name"];
-    filterCheckbox.name = data_dao["name"];
-    filterCheckbox.value = data_dao["name"];
-
-    let filterCheckboxLabel = document.createElement("label");
-    filterCheckboxLabel.htmlFor = "checkbox_" + data_dao["name"];
-    filterCheckboxLabel.appendChild(document.createTextNode(data_dao["name"]));
-
-    checkboxesDivElement.appendChild(filterCheckbox);
-    checkboxesDivElement.appendChild(filterCheckboxLabel);
-    checkboxesDivElement.appendChild(document.createElement("br"));
-  }
-}
-
-window.onload=createFilterSettings();

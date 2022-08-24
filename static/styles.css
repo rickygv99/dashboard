@@ -37,6 +37,13 @@
   background-color: #444;
 }
 
+.filterCheckbox {
+  color: white;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  font-size: 12px;
+}
+
 .content {
   transition: margin-left .5s;
   padding: 20px;
