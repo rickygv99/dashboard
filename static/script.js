@@ -73,12 +73,17 @@ window.onclick = function(event) {
 }
 
 
-function sortAZ() {
+function sortAlphabetically(reverse) {
   let names = [];
   for (let data_dao of data) {
     names.push(data_dao["name"]);
   }
-  names.sort();
+
+  if (reverse) {
+    names = names.sort().reverse();
+  } else {
+    names.sort();
+  }
 
   let dataSorted = []
   while (names.length > 0) {
@@ -95,33 +100,15 @@ function sortAZ() {
   for (let data_dao of dataSorted) {
     data.push(data_dao);
   }
+}
 
+function sortAZ() {
+  sortAlphabetically(false);
   drawGraphs();
 }
 
 function sortZA() {
-  let names = [];
-  for (let data_dao of data) {
-    names.push(data_dao["name"]);
-  }
-  names = names.sort().reverse();
-
-  let dataSorted = []
-  while (names.length > 0) {
-    for (let data_dao of data) {
-      let next_name = names.shift();
-      if (data_dao["name"] === next_name) {
-        dataSorted.push(data_dao);
-        break;
-      }
-    }
-  }
-
-  data = [];
-  for (let data_dao of dataSorted) {
-    data.push(data_dao);
-  }
-
+  sortAlphabetically(true);
   drawGraphs();
 }
 
