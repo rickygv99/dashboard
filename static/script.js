@@ -13,7 +13,7 @@ function closeFilterSettings() {
 }
 
 
-const data = JSON.parse(document.getElementById("data").textContent);
+var data = JSON.parse(document.getElementById("data").textContent);
 
 var visibleData = [];
 for (let data_dao of data) {
@@ -27,7 +27,6 @@ function createFilterSettings() {
     let filterCheckbox = document.createElement("input");
     filterCheckbox.type = "checkbox";
     filterCheckbox.id = "checkbox_" + data_dao["name"];
-    filterCheckbox.className = "filterCheckbox";
     filterCheckbox.name = data_dao["name"];
     filterCheckbox.value = data_dao["name"];
     if (visibleData.includes(data_dao["name"])) {
@@ -50,6 +49,7 @@ function createFilterSettings() {
 
     checkboxesDivElement.appendChild(filterCheckbox);
     checkboxesDivElement.appendChild(filterCheckboxLabel);
+    checkboxesDivElement.appendChild(document.createElement("br"));
     checkboxesDivElement.appendChild(document.createElement("br"));
   }
 }
