@@ -11,35 +11,41 @@
 
 {% block content %}
 
-<div class="row">
-  <div class="column">
-    <div id="chart_div_avr_all_time" class="chart"></div>
-  </div>
-  <div class="column">
-    <div id="chart_div_avr_over_time" class="chart"></div>
-  </div>
+<div id="filterSettings" class="sidebar">
+  <a href="javascript:void(0)" class="closefiltersettings" onclick="closeFilterSettings()">&times;</a>
 </div>
-<div class="row">
-  <div class="column">
-    <div id="chart_div_price_over_time" class="chart"></div>
+<div id="content" class="content">
+  <button class="openfiltersettings" onclick="openFilterSettings()">Filter</button>
+  <div class="row">
+    <div class="column">
+      <div id="chart_div_avr_all_time" class="chart"></div>
+    </div>
+    <div class="column">
+      <div id="chart_div_avr_over_time" class="chart"></div>
+    </div>
   </div>
-  <div class="column">
-    <div id="chart_div_volume_over_time" class="chart"></div>
+  <div class="row">
+    <div class="column">
+      <div id="chart_div_price_over_time" class="chart"></div>
+    </div>
+    <div class="column">
+      <div id="chart_div_volume_over_time" class="chart"></div>
+    </div>
   </div>
-</div>
-<div class="row">
-  <div class="column">
-    <div id="chart_div_inverse_gini_all_time" class="chart"></div>
+  <div class="row">
+    <div class="column">
+      <div id="chart_div_inverse_gini_all_time" class="chart"></div>
+    </div>
+    <div class="column">
+      <div id="chart_div_inverse_gini_over_time" class="chart"></div>
+    </div>
   </div>
-  <div class="column">
-    <div id="chart_div_inverse_gini_over_time" class="chart"></div>
-  </div>
-</div>
-<div class="row">
-  <div class="column">
-    <div id="chart_principal_components" class="chart"></div>
-  </div>
-  <div class="column">
+  <div class="row">
+    <div class="column">
+      <div id="chart_principal_components" class="chart"></div>
+    </div>
+    <div class="column">
+    </div>
   </div>
 </div>
 

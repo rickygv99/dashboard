@@ -2,6 +2,45 @@
   margin: 15px;
 }
 
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 50px;
+  transition: 0.5s;
+}
+
+.sidebar .closefiltersettings {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 32px;
+  margin-left: 50px;
+}
+
+.openfiltersettings {
+  font-size: 18px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.openfiltersettings:hover {
+  background-color: #444;
+}
+
+.content {
+  transition: margin-left .5s;
+  padding: 20px;
+}
+
 .row {
   display: flex;
   flex-direction: row;

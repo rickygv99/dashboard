@@ -1,3 +1,14 @@
+function openFilterSettings() {
+  document.getElementById("filterSettings").style.width = "250px";
+  document.getElementById("content").style.marginLeft = "250px";
+}
+
+function closeFilterSettings() {
+  document.getElementById("filterSettings").style.width = "0";
+  document.getElementById("content").style.marginLeft = "0";
+}
+
+
 var data_avr_all_time = [["Name", "Average voting rate"]];
 var data_inverse_gini_all_time = [["Name", "Average Gini coefficient"]];
 var data_avr_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
