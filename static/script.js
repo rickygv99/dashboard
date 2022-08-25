@@ -102,6 +102,30 @@ function sortAlphabetically(reverse) {
   }
 }
 
+function sortVotingRate(increasing) {
+  let dataSorted = []
+  while (data.length > 0) {
+    let vr = data[0]["average_voting_rate_all_time"];
+    let vr_index = 0;
+    for (let k = 0; k < data.length; k++) {
+      if (increasing && data[k]["average_voting_rate_all_time"] < vr) {
+        vr = data[k]["average_voting_rate_all_time"];
+        vr_index = k;
+      } else if (!increasing && data[k]["average_voting_rate_all_time"] > vr) {
+        vr = data[k]["average_voting_rate_all_time"];
+        vr_index = k;
+      }
+    }
+    dataSorted.push(data[vr_index]);
+    data.splice(vr_index, 1);
+  }
+
+  data = [];
+  for (let data_dao of dataSorted) {
+    data.push(data_dao);
+  }
+}
+
 function sortAZ() {
   sortAlphabetically(false);
   drawGraphs();
@@ -109,6 +133,16 @@ function sortAZ() {
 
 function sortZA() {
   sortAlphabetically(true);
+  drawGraphs();
+}
+
+function sortIncreasingVotingRate() {
+  sortVotingRate(true);
+  drawGraphs();
+}
+
+function sortDecreasingVotingRate() {
+  sortVotingRate(false);
   drawGraphs();
 }
 
