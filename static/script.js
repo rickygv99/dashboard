@@ -14,6 +14,7 @@ function closeFilterSettings() {
 
 
 var data = JSON.parse(document.getElementById("data").textContent);
+sortVotingRate(true);
 
 var visibleData = [];
 for (let data_dao of data) {
