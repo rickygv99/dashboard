@@ -148,8 +148,8 @@ function sortDecreasingVotingRate() {
 
 
 function drawGraphs() {
-  var data_avr_all_time = [["Name", "Average voting rate"]];
-  var data_inverse_gini_all_time = [["Name", "Average Gini coefficient"]];
+  var data_avr_all_time = [["Name", "Average voting rate", {role: "style"}]];
+  var data_inverse_gini_all_time = [["Name", "Average Gini coefficient", {role: "style"}]];
   var data_avr_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
   var data_inverse_gini_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
   var data_price_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
@@ -161,8 +161,16 @@ function drawGraphs() {
       continue;
     }
 
-    data_avr_all_time.push([data_dao["name"], data_dao["average_voting_rate_all_time"]]);
-    data_inverse_gini_all_time.push([data_dao["name"], data_dao["average_inverse_gini_all_time"]]);
+    if (data_dao["name"] !== "Compound") {
+      data_avr_all_time.push([data_dao["name"], data_dao["average_voting_rate_all_time"], "blue"]);
+    } else {
+      data_avr_all_time.push([data_dao["name"], data_dao["average_voting_rate_all_time"], "red"]);
+    }
+    if (data_dao["name"] !== "Compound") {
+      data_inverse_gini_all_time.push([data_dao["name"], data_dao["average_inverse_gini_all_time"], "blue"]);
+    } else {
+      data_inverse_gini_all_time.push([data_dao["name"], data_dao["average_inverse_gini_all_time"], "red"]);
+    }
 
     data_avr_over_time_dao = [data_dao["name"]];
     data_inverse_gini_over_time_dao = [data_dao["name"]];
