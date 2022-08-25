@@ -1,5 +1,5 @@
-const GRAPH_WIDTH = 400;
-const GRAPH_HEIGHT = 400;
+const GRAPH_WIDTH = 380;
+const GRAPH_HEIGHT = 380;
 
 
 function openFilterSettings() {
@@ -207,7 +207,7 @@ function drawGraphs() {
   ).draw(
     google.visualization.arrayToDataTable(data_avr_all_time),
     {
-      title: "Average Voting Rate by DAOs (All-Time)",
+      title: "Average Voting Rates (All-Time)",
       width: GRAPH_WIDTH,
       height: GRAPH_HEIGHT,
       hAxis: {
@@ -230,7 +230,7 @@ function drawGraphs() {
   ).draw(
     google.visualization.arrayToDataTable(data_avr_over_time),
     {
-      title: "DAO Voting Rate Over Time",
+      title: "Voting Rate Over Time",
       width: GRAPH_WIDTH,
       height: GRAPH_HEIGHT,
       hAxis: {
@@ -251,7 +251,7 @@ function drawGraphs() {
   ).draw(
     google.visualization.arrayToDataTable(data_inverse_gini_all_time),
     {
-      title: "Average Inverse Gini Coefficient for Participation by DAOs (All-Time)",
+      title: "Average Inverse Gini Coefficient for Participation (All-Time)",
       width: GRAPH_WIDTH,
       height: GRAPH_HEIGHT,
       hAxis: {
@@ -301,7 +301,7 @@ function drawGraphs() {
   ).draw(
     google.visualization.arrayToDataTable(data_price_over_time),
     {
-      title: "DAO Token Prices Over Time",
+      title: "Token Prices Over Time",
       width: GRAPH_WIDTH,
       height: GRAPH_HEIGHT,
       hAxis: {
@@ -328,7 +328,7 @@ function drawGraphs() {
   ).draw(
     google.visualization.arrayToDataTable(data_volume_over_time),
     {
-      title: "DAO Token Volumes Over Time",
+      title: "Token Volumes Over Time",
       width: GRAPH_WIDTH,
       height: GRAPH_HEIGHT,
       hAxis: {
@@ -349,7 +349,7 @@ function drawGraphs() {
   ).draw(
     google.visualization.arrayToDataTable(data_components),
     {
-      title: "DAO Principal Components",
+      title: "Principal Components (n=2)",
       width: GRAPH_WIDTH,
       height: GRAPH_HEIGHT,
       hAxis: {
