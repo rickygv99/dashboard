@@ -13,7 +13,17 @@
 
 <div id="filterSettings" class="sidebar">
   <a href="javascript:void(0)" class="closefiltersettings" onclick="closeFilterSettings()">&times;</a>
+  <input id="dateRangeSlider" type="range" list="dateRange" min="30" max="150" step="30" value="150">
+  <datalist id="dateRange" class="sliderText">
+    <option value="30" label="30">30</option>
+    <option value="60" label="60">60</option>
+    <option value="90" label="90">90</option>
+    <option value="120" label="120">120</option>
+    <option value="150" label="150">150</option>
+  </datalist>
+  <label for="dateRange" class="sidebarText">Days to display</label>
   <div id="filterCheckboxes" class="filterCheckboxes">
+    <p class="sidebarText">Toggle Individual DAOs</p>
   </div>
 </div>
 <div id="content" class="content">
@@ -31,29 +41,29 @@
   </div>
   <div class="row">
     <div class="column">
-      <div id="chart_div_avr_all_time" class="chart"></div>
+      <div id="chart_div_avr_all_time"></div>
     </div>
     <div class="column">
-      <div id="chart_div_avr_over_time" class="chart"></div>
+      <div id="chart_div_avr_over_time"></div>
     </div>
     <div class="column">
-      <div id="chart_div_price_over_time" class="chart"></div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="column">
-      <div id="chart_div_inverse_gini_all_time" class="chart"></div>
-    </div>
-    <div class="column">
-      <div id="chart_div_inverse_gini_over_time" class="chart"></div>
-    </div>
-    <div class="column">
-      <div id="chart_div_volume_over_time" class="chart"></div>
+      <div id="chart_div_price_over_time"></div>
     </div>
   </div>
   <div class="row">
     <div class="column">
-      <div id="chart_principal_components" class="chart"></div>
+      <div id="chart_div_inverse_gini_all_time"></div>
+    </div>
+    <div class="column">
+      <div id="chart_div_inverse_gini_over_time"></div>
+    </div>
+    <div class="column">
+      <div id="chart_div_volume_over_time"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="column">
+      <div id="chart_principal_components"></div>
     </div>
     <div class="column">
     </div>

@@ -1,6 +1,4 @@
-const GRAPH_WIDTH = 380;
-const GRAPH_HEIGHT = 380;
-
+// UI functions
 
 function openFilterSettings() {
   document.getElementById("filterSettings").style.width = "250px";
@@ -73,6 +71,16 @@ window.onclick = function(event) {
   }
 }
 
+
+var dateSlider = document.getElementById("dateRangeSlider");
+var dateRange = dateSlider.value;
+dateSlider.onchange = function() {
+  dateRange = this.value;
+  drawGraphs();
+}
+
+
+// Sorting functions
 
 function sortAlphabetically(reverse) {
   let names = [];
@@ -148,13 +156,220 @@ function sortDecreasingVotingRate() {
 }
 
 
+// Graphing functions
+
+const GRAPH_WIDTH = 500;
+const GRAPH_HEIGHT = 500;
+const CHART_LEFT = 140;
+const LABEL_FONT_SIZE = 8;
+
+function transpose(data) {
+  // https://stackoverflow.com/questions/17428587/transposing-a-2d-array-in-javascript
+  return data[0].map((col, i) =>
+    data.map((row) => row[i])
+  );
+}
+
+function graphVotingRateAllTime(data_avr_all_time) {
+  new google.visualization.BarChart(
+    document.getElementById("chart_div_avr_all_time")
+  ).draw(
+    google.visualization.arrayToDataTable(data_avr_all_time),
+    {
+      title: "Voting Rates (All-Time)",
+      width: GRAPH_WIDTH,
+      height: GRAPH_HEIGHT,
+      chartArea: {
+        left: CHART_LEFT,
+      },
+      hAxis: {
+        title: "Average voting rate (%)",
+        scaleType: 'log',
+        viewWindow: {
+          max: 100,
+        },
+      },
+      vAxis: {
+        textStyle: {
+          fontSize: LABEL_FONT_SIZE,
+        },
+      },
+      legend: { position: "none" },
+    }
+  );
+}
+
+function graphVotingRateOverTime(data_avr_over_time) {
+  let data_format = google.visualization.arrayToDataTable(transpose(data_avr_over_time));
+  let formatter = new google.visualization.NumberFormat({ pattern: '#%', fractionDigits: 5 });
+  formatter.format(data_format, 0);
+
+  new google.visualization.LineChart(
+    document.getElementById("chart_div_avr_over_time")
+  ).draw(
+    data_format,
+    {
+      title: "Voting Rate Over Time",
+      width: GRAPH_WIDTH,
+      height: GRAPH_HEIGHT,
+      chartArea: {
+        left: CHART_LEFT,
+      },
+      hAxis: {
+        title: "Time (in days prior)",
+        minValue: 0,
+      },
+      vAxis: {
+        title: "Average voting rate (%)",
+        scaleType: 'log',
+      },
+      legend: { position: "bottom" },
+    }
+  );
+}
+
+function graphInverseGiniAllTime(data_inverse_gini_all_time) {
+  new google.visualization.BarChart(
+    document.getElementById("chart_div_inverse_gini_all_time")
+  ).draw(
+    google.visualization.arrayToDataTable(data_inverse_gini_all_time),
+    {
+      title: "Inverse Gini Coef. for Participation (All-Time)",
+      width: GRAPH_WIDTH,
+      height: GRAPH_HEIGHT,
+      chartArea: {
+        left: CHART_LEFT,
+      },
+      hAxis: {
+        title: "Average Inverse Gini Coef.",
+        scaleType: 'log',
+        viewWindow: {
+          max: 1,
+        },
+      },
+      vAxis: {
+        textStyle: {
+          fontSize: LABEL_FONT_SIZE,
+        },
+      },
+      legend: { position: "none" },
+    }
+  );
+}
+
+function graphInverseGiniOverTime(data_inverse_gini_over_time) {
+  new google.visualization.LineChart(
+    document.getElementById("chart_div_inverse_gini_over_time")
+  ).draw(
+    google.visualization.arrayToDataTable(transpose(data_inverse_gini_over_time)),
+    {
+      title: "Inverse Gini Coef. for Participation Over Time",
+      width: GRAPH_WIDTH,
+      height: GRAPH_HEIGHT,
+      chartArea: {
+        left: CHART_LEFT,
+      },
+      hAxis: {
+        title: "Time (in days prior)",
+        minValue: 0,
+      },
+      vAxis: {
+        title: "Average Inverse Gini Coef.",
+        scaleType: 'log',
+      },
+      legend: { position: "bottom" },
+    }
+  );
+}
+
+function graphPriceOverTime(data_price_over_time) {
+  new google.visualization.LineChart(
+    document.getElementById("chart_div_price_over_time")
+  ).draw(
+    google.visualization.arrayToDataTable(transpose(data_price_over_time)),
+    {
+      title: "Token Prices Over Time",
+      width: GRAPH_WIDTH,
+      height: GRAPH_HEIGHT,
+      chartArea: {
+        left: CHART_LEFT,
+      },
+      hAxis: {
+        title: "Time (in days prior)",
+        minValue: 0,
+      },
+      vAxis: {
+        title: "Average price (USD)",
+        scaleType: 'log',
+      },
+      legend: { position: "bottom" },
+    }
+  );
+}
+
+function graphVolumeOverTime(data_volume_over_time) {
+  new google.visualization.LineChart(
+    document.getElementById("chart_div_volume_over_time")
+  ).draw(
+    google.visualization.arrayToDataTable(transpose(data_volume_over_time)),
+    {
+      title: "Token Volumes Over Time",
+      width: GRAPH_WIDTH,
+      height: GRAPH_HEIGHT,
+      chartArea: {
+        left: CHART_LEFT,
+      },
+      hAxis: {
+        title: "Time (in days prior)",
+        minValue: 0,
+      },
+      vAxis: {
+        title: "Average volume",
+        scaleType: 'log',
+      },
+      legend: { position: "bottom" },
+    }
+  );
+}
+
+function graphPrincipalComponents(data_components) {
+  new google.visualization.ScatterChart(
+    document.getElementById("chart_principal_components")
+  ).draw(
+    google.visualization.arrayToDataTable(data_components),
+    {
+      title: "Principal Components (n=2)",
+      width: GRAPH_WIDTH,
+      height: GRAPH_HEIGHT,
+      chartArea: {
+        left: CHART_LEFT,
+      },
+      hAxis: {
+        title: "n1",
+      },
+      vAxis: {
+        title: "n2",
+      },
+      legend: "none",
+    }
+  );
+}
+
 function drawGraphs() {
   var data_avr_all_time = [["Name", "Average voting rate", {role: "style"}]];
   var data_inverse_gini_all_time = [["Name", "Average Gini coefficient", {role: "style"}]];
-  var data_avr_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
-  var data_inverse_gini_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
-  var data_price_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
-  var data_volume_over_time = [["Time (in days)", "30", "60", "90", "120", "150"]];
+  var over_time_header = ["Time (in days prior)"];
+  let options = document.getElementById("dateRange").options;
+  for (let option of options) {
+    over_time_header.push(String(option.value));
+    if (String(option.value) === String(dateRange)) {
+      break;
+    }
+  }
+  var data_avr_over_time = [over_time_header];
+  var data_inverse_gini_over_time = [over_time_header];
+  var data_price_over_time = [over_time_header];
+  var data_volume_over_time = [over_time_header];
   var data_components = [["nf1", "nf2", {role: "annotation"}]];
 
   for (let data_dao of data) {
@@ -162,16 +377,13 @@ function drawGraphs() {
       continue;
     }
 
-    if (data_dao["name"] !== "Compound") {
-      data_avr_all_time.push([data_dao["name"], data_dao["average_voting_rate_all_time"], "blue"]);
-    } else {
-      data_avr_all_time.push([data_dao["name"], data_dao["average_voting_rate_all_time"], "red"]);
+    let bar_color = "blue";
+    if (data_dao["name"] === "Compound") {
+      bar_color = "red";
     }
-    if (data_dao["name"] !== "Compound") {
-      data_inverse_gini_all_time.push([data_dao["name"], data_dao["average_inverse_gini_all_time"], "blue"]);
-    } else {
-      data_inverse_gini_all_time.push([data_dao["name"], data_dao["average_inverse_gini_all_time"], "red"]);
-    }
+
+    data_avr_all_time.push([data_dao["name"], data_dao["average_voting_rate_all_time"], bar_color]);
+    data_inverse_gini_all_time.push([data_dao["name"], data_dao["average_inverse_gini_all_time"], bar_color]);
 
     data_avr_over_time_dao = [data_dao["name"]];
     data_inverse_gini_over_time_dao = [data_dao["name"]];
@@ -179,9 +391,10 @@ function drawGraphs() {
     data_volume_over_time_dao = [data_dao["name"]];
 
     // We use the same number of periods for each of graphs
-    let num_periods = data_dao["average_voting_rates"].length
+    let num_total_periods = data_dao["average_voting_rates"].length
+    let num_periods = over_time_header.length - 1
 
-    for (let i = 0; i < num_periods; i++) {
+    for (let i = num_total_periods - num_periods; i < num_total_periods; i++) {
       data_avr_over_time_dao.push(data_dao["average_voting_rates"][i]);
       data_inverse_gini_over_time_dao.push(data_dao["average_inverse_ginis"][i]);
       if (i < data_dao["average_prices"].length) {
@@ -201,6 +414,7 @@ function drawGraphs() {
     if (data_volume_over_time_dao.length - 1 == num_periods) {
       data_volume_over_time.push(data_volume_over_time_dao);
     }
+
     if (data_dao["components"].length == 2) {
       let components = []
       for (let j = 0; j < 2; j++) {
@@ -211,165 +425,13 @@ function drawGraphs() {
     }
   }
 
-  new google.visualization.BarChart(
-    document.getElementById("chart_div_avr_all_time")
-  ).draw(
-    google.visualization.arrayToDataTable(data_avr_all_time),
-    {
-      title: "Average Voting Rates (All-Time)",
-      width: GRAPH_WIDTH,
-      height: GRAPH_HEIGHT,
-      hAxis: {
-        title: "Average voting rate (%)",
-        minValue: 0,
-        scaleType: 'log',
-      },
-      legend: { position: "none" },
-    }
-  );
-
-  // Transpose data
-  // https://stackoverflow.com/questions/17428587/transposing-a-2d-array-in-javascript
-  data_avr_over_time = data_avr_over_time[0].map((col, i) =>
-    data_avr_over_time.map((row) => row[i])
-  );
-
-  new google.visualization.LineChart(
-    document.getElementById("chart_div_avr_over_time")
-  ).draw(
-    google.visualization.arrayToDataTable(data_avr_over_time),
-    {
-      title: "Voting Rate Over Time",
-      width: GRAPH_WIDTH,
-      height: GRAPH_HEIGHT,
-      hAxis: {
-        title: "Time (in days)",
-        minValue: 0,
-      },
-      vAxis: {
-        title: "Average voting rate (%)",
-        scaleType: 'log',
-      },
-      legend: { position: "bottom" },
-      curveType: "function",
-    }
-  );
-
-  new google.visualization.BarChart(
-    document.getElementById("chart_div_inverse_gini_all_time")
-  ).draw(
-    google.visualization.arrayToDataTable(data_inverse_gini_all_time),
-    {
-      title: "Average Inverse Gini Coefficient for Participation (All-Time)",
-      width: GRAPH_WIDTH,
-      height: GRAPH_HEIGHT,
-      hAxis: {
-        title: "Average Inverse Gini Coefficient",
-        minValue: 0,
-        scaleType: 'log',
-      },
-      legend: { position: "none" },
-    }
-  );
-
-  // Transpose data
-  // https://stackoverflow.com/questions/17428587/transposing-a-2d-array-in-javascript
-  data_inverse_gini_over_time = data_inverse_gini_over_time[0].map((col, i) =>
-    data_inverse_gini_over_time.map((row) => row[i])
-  );
-
-  new google.visualization.LineChart(
-    document.getElementById("chart_div_inverse_gini_over_time")
-  ).draw(
-    google.visualization.arrayToDataTable(data_inverse_gini_over_time),
-    {
-      title: "Inverse Gini Coefficient for Participation Over Time",
-      width: GRAPH_WIDTH,
-      height: GRAPH_HEIGHT,
-      hAxis: {
-        title: "Time (in days)",
-        minValue: 0,
-      },
-      vAxis: {
-        title: "Inverse Gini Coefficient",
-        scaleType: 'log',
-      },
-      legend: { position: "bottom" },
-      curveType: "function",
-    }
-  );
-
-  // Transpose data
-  // https://stackoverflow.com/questions/17428587/transposing-a-2d-array-in-javascript
-  data_price_over_time = data_price_over_time[0].map((col, i) =>
-    data_price_over_time.map((row) => row[i])
-  );
-
-  new google.visualization.LineChart(
-    document.getElementById("chart_div_price_over_time")
-  ).draw(
-    google.visualization.arrayToDataTable(data_price_over_time),
-    {
-      title: "Token Prices Over Time",
-      width: GRAPH_WIDTH,
-      height: GRAPH_HEIGHT,
-      hAxis: {
-        title: "Time (in days)",
-        minValue: 0,
-      },
-      vAxis: {
-        title: "Average price (USD)",
-        scaleType: 'log',
-      },
-      legend: { position: "bottom" },
-      curveType: "function",
-    }
-  );
-
-  // Transpose data
-  // https://stackoverflow.com/questions/17428587/transposing-a-2d-array-in-javascript
-  data_volume_over_time = data_volume_over_time[0].map((col, i) =>
-    data_volume_over_time.map((row) => row[i])
-  );
-
-  new google.visualization.LineChart(
-    document.getElementById("chart_div_volume_over_time")
-  ).draw(
-    google.visualization.arrayToDataTable(data_volume_over_time),
-    {
-      title: "Token Volumes Over Time",
-      width: GRAPH_WIDTH,
-      height: GRAPH_HEIGHT,
-      hAxis: {
-        title: "Time (in days)",
-        minValue: 0,
-      },
-      vAxis: {
-        title: "Average volume",
-        scaleType: 'log',
-      },
-      legend: { position: "bottom" },
-      curveType: "function",
-    }
-  );
-
-  new google.visualization.ScatterChart(
-    document.getElementById("chart_principal_components")
-  ).draw(
-    google.visualization.arrayToDataTable(data_components),
-    {
-      title: "Principal Components (n=2)",
-      width: GRAPH_WIDTH,
-      height: GRAPH_HEIGHT,
-      hAxis: {
-        title: "n1",
-      },
-      vAxis: {
-        title: "n2",
-      },
-      legend: "none",
-    }
-  )
+  graphVotingRateAllTime(data_avr_all_time);
+  graphVotingRateOverTime(data_avr_over_time);
+  graphInverseGiniAllTime(data_inverse_gini_all_time);
+  graphInverseGiniOverTime(data_inverse_gini_over_time);
+  graphPriceOverTime(data_price_over_time);
+  graphVolumeOverTime(data_volume_over_time);
+  graphPrincipalComponents(data_components);
 }
 
 // Load the Visualization API and the corechart package.

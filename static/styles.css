@@ -3,16 +3,16 @@
 }
 
 .sidebar {
-  height: 100%;
   width: 0;
-  position: fixed;
+  position: absolute;
   z-index: 1;
   top: 0;
   left: 0;
   background-color: #111;
-  overflow-x: hidden;
-  padding-top: 50px;
   transition: 0.5s;
+  overflow: auto;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 
 .sidebar .closefiltersettings {
@@ -81,6 +81,17 @@
   display: block;
 }
 
+.sidebarText {
+  color: white;
+  font-size: 12px;
+  margin-left: 5px;
+}
+
+.sliderText {
+  color: white;
+  font-size: 12px;
+}
+
 .filterCheckboxes {
   color: white;
   font-size: 12px;
@@ -104,9 +115,4 @@
   flex-direction: column;
   flex-basis: 100%;
   flex: 1;
-}
-
-.chart {
-  width: 400;
-  height: 400;
 }
