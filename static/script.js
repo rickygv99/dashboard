@@ -19,6 +19,8 @@ for (let data_dao of data) {
   visibleData.push(data_dao["name"]);
 }
 
+const onchainData = ["Compound"];
+
 
 function createFilterSettings() {
   var checkboxesDivElement = document.getElementById("filterCheckboxes");
@@ -78,6 +80,41 @@ dateSlider.onchange = function() {
   dateRange = this.value;
   drawGraphs();
 }
+
+var offchainToggle = document.getElementById("offchainToggle")
+offchainToggle.addEventListener("click", function() {
+  for (let data_dao of data) {
+    if (onchainData.includes(data_dao["name"]) == false) {
+      if (this.checked) {
+        if (visibleData.includes(data_dao["name"]) == false) {
+          visibleData.push(data_dao["name"])
+        }
+      } else {
+        visibleData = visibleData.filter(val => val !== data_dao["name"]);
+      }
+      var checkbox = document.getElementById("checkbox_" + data_dao["name"]);
+      checkbox.checked = this.checked
+    }
+  }
+  drawGraphs();
+});
+var onchainToggle = document.getElementById("onchainToggle")
+onchainToggle.addEventListener("click", function() {
+  for (let data_dao of data) {
+    if (onchainData.includes(data_dao["name"])) {
+      if (this.checked) {
+        if (visibleData.includes(data_dao["name"]) == false) {
+          visibleData.push(data_dao["name"])
+        }
+      } else {
+        visibleData = visibleData.filter(val => val !== data_dao["name"]);
+      }
+      var checkbox = document.getElementById("checkbox_" + data_dao["name"]);
+      checkbox.checked = this.checked
+    }
+  }
+  drawGraphs();
+});
 
 
 // Sorting functions
@@ -378,7 +415,7 @@ function drawGraphs() {
     }
 
     let bar_color = "blue";
-    if (data_dao["name"] === "Compound") {
+    if (onchainData.includes(data_dao["name"])) {
       bar_color = "red";
     }
 
