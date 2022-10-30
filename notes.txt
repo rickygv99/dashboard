@@ -1,0 +1,24 @@
+Balancer
+ - All voting takes place on Snapshot (actually, Balancer was the originator of Snapshot).
+SushiSwap
+ - Governed by community, via forum discussions. All voting takes place on the SushiSwap Snapshot.
+Olympus DAO
+ - All voting takes place on Snapshot.
+AAVE
+ - v3 sought to unify on-chain and off-chain proposals / votes which took place in v2 (i.e. some was on-chain and some was on Snapshot) -- in v3 all proposals are now on Snapshot (thanks to SnapshotX), with the v3 contract only acting as a bridge/relay.
+Bankless DAO
+ - All proposals are on Snapshot.
+Curve
+ - Uses Aragon for governance. (Not entirely sure how this works.)
+Decentraland (MANA)
+ - Uses Snapshot for proposals, which are sent to Aragon to execute governance decisions.
+Badger
+ - Uses Snapshot for all proposals. Governance executed on back end by Aragon.
+Paraswap
+ - Uses Snapshot for all proposals.
+Apecoin
+ - Uses Snapshot for all proposals.
+SnapeShift
+ - Uses Snapshot for all proposals.
+Friends With Benefits Pro
+ - Uses Snapshot for all proposals.
