@@ -19,8 +19,6 @@ for (let data_dao of data) {
   visibleData.push(data_dao["name"]);
 }
 
-const onchainData = ["Compound"];
-
 
 function createFilterSettings() {
   var checkboxesDivElement = document.getElementById("filterCheckboxes");
@@ -84,7 +82,7 @@ dateSlider.onchange = function() {
 var offchainToggle = document.getElementById("offchainToggle")
 offchainToggle.addEventListener("click", function() {
   for (let data_dao of data) {
-    if (onchainData.includes(data_dao["name"]) == false) {
+    if (parseInt(data_dao["onchain"]) == 0) {
       if (this.checked) {
         if (visibleData.includes(data_dao["name"]) == false) {
           visibleData.push(data_dao["name"])
@@ -101,7 +99,7 @@ offchainToggle.addEventListener("click", function() {
 var onchainToggle = document.getElementById("onchainToggle")
 onchainToggle.addEventListener("click", function() {
   for (let data_dao of data) {
-    if (onchainData.includes(data_dao["name"])) {
+    if (parseInt(data_dao["onchain"]) == 1) {
       if (this.checked) {
         if (visibleData.includes(data_dao["name"]) == false) {
           visibleData.push(data_dao["name"])
@@ -204,6 +202,43 @@ function transpose(data) {
   // https://stackoverflow.com/questions/17428587/transposing-a-2d-array-in-javascript
   return data[0].map((col, i) =>
     data.map((row) => row[i])
+  );
+}
+
+function graphVotingShares(data_avs) {
+  new google.charts.Bar(
+    document.getElementById("chart_div_avs")
+  ).draw(
+    google.visualization.arrayToDataTable(data_avs),
+    {
+      chart: {
+        title: "Voting Share (Authors vs. Non-Authors)",
+        subtitle: "authors on top, non-authors on bottom"
+      },
+      bars: "horizontal",
+      series: {
+        0: { axis: "authors" },
+        1: { axis: "non-authors" }
+      },
+      width: GRAPH_WIDTH,
+      height: GRAPH_HEIGHT,
+      chartArea: {
+        left: CHART_LEFT,
+      },
+      hAxis: {
+        title: "Average voting share (%)",
+        scaleType: 'log',
+        viewWindow: {
+          max: 100,
+        },
+      },
+      vAxis: {
+        textStyle: {
+          fontSize: LABEL_FONT_SIZE,
+        },
+      },
+      legend: { position: "none" },
+    }
   );
 }
 
@@ -395,6 +430,7 @@ function graphPrincipalComponents(data_components) {
 function drawGraphs() {
   var data_avr_all_time = [["Name", "Average voting rate", {role: "style"}]];
   var data_inverse_gini_all_time = [["Name", "Average Gini coefficient", {role: "style"}]];
+  var data_avs = [["Name", "Authors", "Non-Authors"]];
   var over_time_header = ["Time (in days prior)"];
   let options = document.getElementById("dateRange").options;
   for (let option of options) {
@@ -415,12 +451,16 @@ function drawGraphs() {
     }
 
     let bar_color = "blue";
-    if (onchainData.includes(data_dao["name"])) {
+    console.log(parseInt(data_dao["onchain"]))
+    if (parseInt(data_dao["onchain"]) == 1) {
       bar_color = "red";
     }
 
     data_avr_all_time.push([data_dao["name"], data_dao["average_voting_rate_all_time"], bar_color]);
-    data_inverse_gini_all_time.push([data_dao["name"], data_dao["average_inverse_gini_all_time"], bar_color]);
+    if (parseInt(data_dao["onchain"]) == 0) {
+      data_inverse_gini_all_time.push([data_dao["name"], data_dao["average_inverse_gini_all_time"], bar_color]);
+      data_avs.push([data_dao["name"], data_dao["average_vote_share_authors"], data_dao["average_vote_share_non_authors"]]);
+    }
 
     data_avr_over_time_dao = [data_dao["name"]];
     data_inverse_gini_over_time_dao = [data_dao["name"]];
@@ -441,14 +481,16 @@ function drawGraphs() {
         data_volume_over_time_dao.push(data_dao["average_volumes"][i]);
       }
     }
-    data_avr_over_time.push(data_avr_over_time_dao);
-    data_inverse_gini_over_time.push(data_inverse_gini_over_time_dao);
+    if (parseInt(data_dao["onchain"]) == 0) {
+      data_avr_over_time.push(data_avr_over_time_dao);
+      data_inverse_gini_over_time.push(data_inverse_gini_over_time_dao);
+    }
 
     // Not all DAOs have available market data
-    if (data_price_over_time_dao.length - 1 == num_periods) {
+    if (data_price_over_time_dao.length - 1 == num_periods && parseInt(data_dao["onchain"]) == 0) {
       data_price_over_time.push(data_price_over_time_dao);
     }
-    if (data_volume_over_time_dao.length - 1 == num_periods) {
+    if (data_volume_over_time_dao.length - 1 == num_periods && parseInt(data_dao["onchain"]) == 0) {
       data_volume_over_time.push(data_volume_over_time_dao);
     }
 
@@ -469,6 +511,7 @@ function drawGraphs() {
   graphPriceOverTime(data_price_over_time);
   graphVolumeOverTime(data_volume_over_time);
   graphPrincipalComponents(data_components);
+  graphVotingShares(data_avs);
 }
 
 // Load the Visualization API and the corechart package.

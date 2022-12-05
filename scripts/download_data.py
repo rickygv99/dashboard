@@ -65,12 +65,13 @@ def queryMarketData(symbol, period_begin_time, period_end_time):
 
     return price_average, volume_average
 
-def queryVotingRates(space, supply, period_begin_time, period_end_time):
+def queryVotingData(space, supply, period_begin_time, period_end_time):
     response = requests.post(BASE_URL_SNAPSHOT, json={
         "query": '''query Proposals($space: String!, $created_gte: Int!, $created_lte: Int!) {
           proposals(first: 2147483646, skip: 0, where: {created_gte: $created_gte, created_lte: $created_lte, state: "closed", space: $space}) {
             id,
-            votes
+            votes,
+            author
           }
         }
         ''',
@@ -92,7 +93,44 @@ def queryVotingRates(space, supply, period_begin_time, period_end_time):
     if num_proposals * supply > 0:
         vote_average = 100 * num_votes / (num_proposals * supply)
 
-    return vote_average, num_votes, num_proposals
+    author_vp_average = 0
+    non_author_vp_average = 0
+    author_vp_sum = 0
+    non_author_vp_sum = 0
+    author_num = 0
+    non_author_num = 0
+    for p in proposals:
+        response = requests.post(BASE_URL_SNAPSHOT, json={
+            "query": '''query Votes($proposal: String!) {
+              votes(first: 2147483646, skip: 0, where: {proposal: $proposal}) {
+                id,
+                voter,
+                choice,
+                vp
+              }
+            }
+            ''',
+            "variables": {
+                "proposal": p['id']
+            }
+        })
+        response = response.json()
+        votes = response["data"]["votes"]
+
+        for v in votes:
+            if v['voter'] == p['author']:
+                author_vp_sum += v['vp']
+                author_num += 1
+            else:
+                non_author_vp_sum += v['vp']
+                non_author_num += 1
+
+    if non_author_num > 0:
+        non_author_vp_average = non_author_vp_sum / non_author_num
+    if author_num > 0:
+        author_vp_average = author_vp_sum / author_num
+
+    return vote_average, num_votes, num_proposals, author_vp_sum, non_author_vp_sum # Sum, not average is intentional
 
 def calculateGiniCoefficient(num_proposals, supply, num_votes):
     n = num_proposals * supply
@@ -128,6 +166,8 @@ def querySingleDao(dao):
     average_inverse_ginis = []
     total_votes = 0
     total_proposals = 0
+    sum_vp_author = 0
+    sum_vp_non_author = 0
     for j in range(NUM_PERIODS):
         period_begin_time = START_TIME + j * PERIOD
         period_end_time = START_TIME + (j + 1) * PERIOD - 1
@@ -137,7 +177,7 @@ def querySingleDao(dao):
             average_prices.append(price_average)
             average_volumes.append(volume_average)
 
-        voting_rate_average, num_votes, num_proposals = queryVotingRates(space, supply, period_begin_time, period_end_time)
+        voting_rate_average, num_votes, num_proposals, author_vp_sum, non_author_vp_sum = queryVotingData(space, supply, period_begin_time, period_end_time)
         average_voting_rates.append(voting_rate_average)
         total_votes += num_votes
         total_proposals += num_proposals
@@ -145,16 +185,27 @@ def querySingleDao(dao):
         inverse_gini_average = calculateInverseGiniCoefficient(num_proposals, supply, num_votes)
         average_inverse_ginis.append(inverse_gini_average)
 
-    average_voting_rate_all_time = 100 * total_votes / (total_proposals * supply)
+        sum_vp_author += author_vp_sum
+        sum_vp_non_author += non_author_vp_sum
+
+    average_vote_share_authors = 0
+    average_vote_share_non_authors = 0
+    if supply > 0:
+        average_vote_share_authors = sum_vp_author / supply
+        average_vote_share_non_authors = sum_vp_non_author / supply
+
+    average_voting_rate_all_time = 0
+    if total_proposals * supply > 0:
+        average_voting_rate_all_time = 100 * total_votes / (total_proposals * supply)
     average_inverse_gini_all_time = calculateInverseGiniCoefficient(total_proposals, supply, total_votes)
 
-    return average_prices, average_volumes, average_voting_rates, average_inverse_ginis, average_voting_rate_all_time, average_inverse_gini_all_time
+    return average_prices, average_volumes, average_voting_rates, average_inverse_ginis, average_voting_rate_all_time, average_inverse_gini_all_time, average_vote_share_authors, average_vote_share_non_authors
 
 def queryAllDaos(dao_data):
     data = []
     for dao in dao_data:
         print(f"Querying data for DAO : {dao['name']}")
-        average_prices, average_volumes, average_voting_rates, average_inverse_ginis, average_voting_rate_all_time, average_inverse_gini_all_time = querySingleDao(dao)
+        average_prices, average_volumes, average_voting_rates, average_inverse_ginis, average_voting_rate_all_time, average_inverse_gini_all_time, average_vote_share_authors, average_vote_share_non_authors = querySingleDao(dao)
 
         data_dao = {}
         data_dao["name"] = dao["name"]
@@ -164,11 +215,13 @@ def queryAllDaos(dao_data):
         data_dao["average_inverse_ginis"] = average_inverse_ginis
         data_dao["average_voting_rate_all_time"] = average_voting_rate_all_time
         data_dao["average_inverse_gini_all_time"] = average_inverse_gini_all_time
+        data_dao["average_vote_share_authors"] = average_vote_share_authors
+        data_dao["average_vote_share_non_authors"] = average_vote_share_non_authors
         data.append(data_dao)
 
     return data
 
-OFFCHAIN_DATA_FILENAME = "offchain_data.json"
+OFFCHAIN_DATA_FILENAME = "v2_offchain_data.json"
 
 def saveOffchainData(data):
     with open(OFFCHAIN_DATA_FILENAME, "w") as datafile:
@@ -192,6 +245,8 @@ else:
 
     daos_to_query = []
     for dao in DAO_DATA:
+        if len(daos_to_query) > 7: # We get rate-limited if too many requests at once, better to split them up
+            break
         if not any(d['name'] == dao['name'] for d in data):
             daos_to_query.append(dao)
 

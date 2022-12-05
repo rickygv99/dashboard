@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from sklearn.decomposition import PCA
 
-OFFCHAIN_DATA_FILENAME = "offchain_data.json"
+OFFCHAIN_DATA_FILENAME = "v2_offchain_data.json"
 
 def saveOffchainData(data):
     with open(OFFCHAIN_DATA_FILENAME, "w") as datafile:
