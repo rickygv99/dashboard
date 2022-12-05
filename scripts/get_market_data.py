@@ -38,7 +38,7 @@ def queryMarketData(symbol, period_begin_time, period_end_time):
 
 print("Beginning market data queries...")
 
-daos_to_query = ["APE", "FWB", "DOODLE", "FISH", "YFI", "ILV", "PSP", "GHST", "BAL", "DYDX", "MANA"]
+daos_to_query = ["CRV", "BADGER", "BNT", "FOX", "MASK"]
 
 for dao in daos_to_query:
     try:

@@ -245,8 +245,10 @@ else:
 
     daos_to_query = []
     for dao in DAO_DATA:
-        if len(daos_to_query) > 7: # We get rate-limited if too many requests at once, better to split them up
+        if len(daos_to_query) >= 3: # We get rate-limited if too many requests at once, better to split them up
             break
+        if dao['name'] in ["Decentraland (MANA)", "Balancer (BAL)", "Bancor (BNT)", "ShapeShift (FOX)", "Fei"]:
+            continue
         if not any(d['name'] == dao['name'] for d in data):
             daos_to_query.append(dao)
 
