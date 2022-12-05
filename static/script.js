@@ -212,7 +212,7 @@ function graphVotingShares(data_avs) {
     google.visualization.arrayToDataTable(data_avs),
     {
       chart: {
-        title: "Voting Share (Authors vs. Non-Authors)",
+        title: "Voting Share (Authors vs. Non-Authors) (%)",
         subtitle: "authors on top, non-authors on bottom"
       },
       bars: "horizontal",

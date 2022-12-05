@@ -158,7 +158,9 @@ def querySingleDao(dao):
     space = dao["snapshot_space"]
     symbol = dao["coinapi_symbol"]
 
-    supply = queryTotalSupply(address, decimals)
+    supply = -1
+    if len(address) > 0: # If address is defined in dao specifications file
+        supply = queryTotalSupply(address, decimals)
 
     average_prices = []
     average_volumes = []
@@ -177,16 +179,17 @@ def querySingleDao(dao):
             average_prices.append(price_average)
             average_volumes.append(volume_average)
 
-        voting_rate_average, num_votes, num_proposals, author_vp_sum, non_author_vp_sum = queryVotingData(space, supply, period_begin_time, period_end_time)
-        average_voting_rates.append(voting_rate_average)
-        total_votes += num_votes
-        total_proposals += num_proposals
+        if len(space) > 0 and supply > 0:
+            voting_rate_average, num_votes, num_proposals, author_vp_sum, non_author_vp_sum = queryVotingData(space, supply, period_begin_time, period_end_time)
+            average_voting_rates.append(voting_rate_average)
+            total_votes += num_votes
+            total_proposals += num_proposals
 
-        inverse_gini_average = calculateInverseGiniCoefficient(num_proposals, supply, num_votes)
-        average_inverse_ginis.append(inverse_gini_average)
+            inverse_gini_average = calculateInverseGiniCoefficient(num_proposals, supply, num_votes)
+            average_inverse_ginis.append(inverse_gini_average)
 
-        sum_vp_author += author_vp_sum
-        sum_vp_non_author += non_author_vp_sum
+            sum_vp_author += author_vp_sum
+            sum_vp_non_author += non_author_vp_sum
 
     average_vote_share_authors = 0
     average_vote_share_non_authors = 0
@@ -211,17 +214,19 @@ def queryAllDaos(dao_data):
         data_dao["name"] = dao["name"]
         data_dao["average_prices"] = average_prices
         data_dao["average_volumes"] = average_volumes
-        data_dao["average_voting_rates"] = average_voting_rates
-        data_dao["average_inverse_ginis"] = average_inverse_ginis
-        data_dao["average_voting_rate_all_time"] = average_voting_rate_all_time
-        data_dao["average_inverse_gini_all_time"] = average_inverse_gini_all_time
-        data_dao["average_vote_share_authors"] = average_vote_share_authors
-        data_dao["average_vote_share_non_authors"] = average_vote_share_non_authors
+        offchain_data = {}
+        offchain_data["average_voting_rates"] = average_voting_rates
+        offchain_data["average_inverse_ginis"] = average_inverse_ginis
+        offchain_data["average_voting_rate_all_time"] = average_voting_rate_all_time
+        offchain_data["average_inverse_gini_all_time"] = average_inverse_gini_all_time
+        offchain_data["average_vote_share_authors"] = average_vote_share_authors
+        offchain_data["average_vote_share_non_authors"] = average_vote_share_non_authors
+        data_dao["offchain"] = offchain_data
         data.append(data_dao)
 
     return data
 
-OFFCHAIN_DATA_FILENAME = "v2_offchain_data.json"
+OFFCHAIN_DATA_FILENAME = "v3_data.json"
 
 def saveOffchainData(data):
     with open(OFFCHAIN_DATA_FILENAME, "w") as datafile:
@@ -232,7 +237,7 @@ def loadOffchainData():
         data = json.load(datafile)
     return data
 
-REFRESH_OFFCHAIN_DATA = False
+REFRESH_OFFCHAIN_DATA = True
 
 print("Beginning data queries...")
 

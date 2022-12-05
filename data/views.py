@@ -14,7 +14,7 @@ logging.basicConfig(format=fmt, level=lvl)
 logging.debug(f"Logging started on {logging.root.name} for {logging.getLevelName(lvl)}")
 
 ONCHAIN_DATA_FILENAME = "v2_onchain_data.json"
-OFFCHAIN_DATA_FILENAME = "v2_offchain_data.json"
+OFFCHAIN_DATA_FILENAME = "v2_data.json"
 
 def loadOffchainData():
     with open(OFFCHAIN_DATA_FILENAME, "r") as datafile:

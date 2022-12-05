@@ -7,14 +7,14 @@ DAO_DATA = [
         "coinapi_symbol": "COINBASE_SPOT_ENS_USD"
     },
     {
-        "name": "Uniswap",
+        "name": "UniswapV2",
         "address": "0x1f9840a85d5aF5bf1D1762'F925BDADdC4201F984",
         "decimals": 18,
         "snapshot_space": "uniswap",
         "coinapi_symbol": "COINBASE_SPOT_UNI_USD"
     },
     {
-        "name": "AAVE",
+        "name": "AaveV2",
         "address": "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
         "decimals": 18,
         "snapshot_space": "aave.eth",
@@ -77,7 +77,7 @@ DAO_DATA = [
         "coinapi_symbol": "COINBASE_SPOT_MANA_USD"
     },
     {
-        "name": "dYdX",
+        "name": "DYDX",
         "address": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
         "decimals": 18,
         "snapshot_space": "dydxgov.eth",
@@ -188,4 +188,88 @@ DAO_DATA = [
         "snapshot_space": "masknetwork.eth",
         "coinapi_symbol": "COINBASE_SPOT_MASK_USD"
     },
+    {
+        "name": "Hop",
+        "address": "",
+        "decimals": 18,
+        "snapshot_space": "",
+        "coinapi_symbol": "" # Market data does not exist on Coinbase
+    },
+    {
+        "name": "Rarible (RARI)",
+        "address": "",
+        "decimals": 18,
+        "snapshot_space": "",
+        "coinapi_symbol": "COINBASE_SPOT_RARI_USD"
+    },
+    {
+        "name": "Reflexer (RAI)",
+        "address": "",
+        "decimals": 18,
+        "snapshot_space": "",
+        "coinapi_symbol": "COINBASE_SPOT_RAI_USD"
+    },
+    {
+        "name": "Compound (COMP)",
+        "address": "",
+        "decimals": 18,
+        "snapshot_space": "",
+        "coinapi_symbol": "COINBASE_SPOT_COMP_USD"
+    },
+    {
+        "name": "Unlock (UDT)",
+        "address": "",
+        "decimals": 18,
+        "snapshot_space": "",
+        "coinapi_symbol": "" # Market data does not exist on Coinbase
+    },
+    {
+        "name": "Silo",
+        "address": "",
+        "decimals": 18,
+        "snapshot_space": "",
+        "coinapi_symbol": "" # Market data does not exist on Coinbase
+    },
+    {
+        "name": "Threshold",
+        "address": "",
+        "decimals": 18,
+        "snapshot_space": "",
+        "coinapi_symbol": "" # Market data does not exist on Coinbase
+    },
+    {
+        "name": "Radicle",
+        "address": "",
+        "decimals": 18,
+        "snapshot_space": "",
+        "coinapi_symbol": "COINBASE_SPOT_RAD_USD"
+    },
+    {
+        "name": "Cryptex",
+        "address": "",
+        "decimals": 18,
+        "snapshot_space": "",
+        "coinapi_symbol": "COINBASE_SPOT_CTX_USD"
+    },
+    {
+        "name": "TrueFi",
+        "address": "",
+        "decimals": 18,
+        "snapshot_space": "",
+        "coinapi_symbol": "COINBASE_SPOT_TRU_USD"
+    },
+    {
+        "name": "Angle",
+        "address": "",
+        "decimals": 18,
+        "snapshot_space": "",
+        "coinapi_symbol": "" # Market data does not exist on Coinbase
+    },
+    {
+        "name": "Origin Dollar (OUSD)",
+        "address": "",
+        "decimals": 18,
+        "snapshot_space": "",
+        "coinapi_symbol": "" # Market data does not exist on Coinbase
+    }
 ]

@@ -11,6 +11,8 @@ def loadOffchainData():
         data = json.load(datafile)
     return data
 
+print(f"Updating DAO data...")
+
 data = loadOffchainData()
 
 for i in range(len(data)):
