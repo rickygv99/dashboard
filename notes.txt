@@ -29,3 +29,10 @@ SnapeShift
  - Uses Snapshot for all proposals.
 Friends With Benefits Pro
  - Uses Snapshot for all proposals.
+
+ top 5 votes by participationo rate -- whhich ones are critical
+
+ use forum activiity as a metric for evaluating importance of proposals
+
+ compare activity / turnout before/after shifts to Snapshot
+ 
