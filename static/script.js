@@ -300,6 +300,28 @@ function graphVotingRateOverTime(data_avr_over_time) {
   );
 }
 
+function graphTopTenPower(data_top_ten_power) {
+  new google.visualization.BarChart(
+    document.getElementById("chart_div_top_ten_power")
+  ).draw(
+    google.visualization.arrayToDataTable(data_top_ten_power),
+    {
+      title: "Top 10 Voting Address's Share of Voting Power",
+      width: GRAPH_WIDTH,
+      height: GRAPH_HEIGHT,
+      chartArea: {
+        left: CHART_LEFT,
+      },
+      vAxis: {
+        textStyle: {
+          fontSize: LABEL_FONT_SIZE,
+        },
+      },
+      legend: { position: "none" },
+    }
+  );
+}
+
 function graphInverseGiniAllTime(data_inverse_gini_all_time) {
   new google.visualization.BarChart(
     document.getElementById("chart_div_inverse_gini_all_time")
@@ -427,9 +449,35 @@ function graphPrincipalComponents(data_components) {
   );
 }
 
+function graphYesVoteShares(data_yes_vote_shares) {
+  new google.visualization.Histogram(
+    document.getElementById("chart_yes_vote_shares")
+  ).draw(
+    google.visualization.arrayToDataTable(data_yes_vote_shares),
+    {
+      title: "Proposal Yes Vote Share",
+      width: GRAPH_WIDTH,
+      height: GRAPH_HEIGHT,
+      chartArea: {
+        left: CHART_LEFT,
+      },
+      vAxis: {
+        title: "Count",
+      },
+      legend: "none",
+      histogram: {
+        minValue: 0,
+        maxValue: 0.999999,
+        lastBucketPercentile: 5
+      }
+    }
+  );
+}
+
 function drawGraphs() {
   var data_avr_all_time = [["Name", "Average voting rate", {role: "style"}]];
   var data_inverse_gini_all_time = [["Name", "Average Gini coefficient", {role: "style"}]];
+  var data_top_ten_power = [["Name", "Share of voting power"]];
   var data_avs = [["Name", "Authors", "Non-Authors"]];
   var over_time_header = ["Time (in days prior)"];
   let options = document.getElementById("dateRange").options;
@@ -445,13 +493,13 @@ function drawGraphs() {
   var data_volume_over_time = [over_time_header];
   var data_components = [["nf1", "nf2", {role: "annotation"}]];
 
+  var data_yes_vote_shares = [["Name", "Yes Vote Share"]];
   for (let data_dao of data) {
     if (visibleData.includes(data_dao["name"]) == false) {
       continue;
     }
 
     let bar_color = "blue";
-    console.log(parseInt(data_dao["onchain"]))
     if (parseInt(data_dao["onchain"]) == 1) {
       bar_color = "red";
     }
@@ -462,45 +510,54 @@ function drawGraphs() {
       data_avs.push([data_dao["name"], data_dao["average_vote_share_authors"], data_dao["average_vote_share_non_authors"]]);
     }
 
+    if (parseInt(data_dao["onchain"]) == 1) {
+      data_top_ten_power.push([data_dao["name"], data_dao["top_ten_power"]]);
+      for (let yes_vote_shares of data_dao["yes_vote_shares"]) {
+        if (yes_vote_shares < 1) {
+          data_yes_vote_shares.push([data_dao["name"], yes_vote_shares])
+        }
+      }
+    }
+
     data_avr_over_time_dao = [data_dao["name"]];
     data_inverse_gini_over_time_dao = [data_dao["name"]];
     data_price_over_time_dao = [data_dao["name"]];
     data_volume_over_time_dao = [data_dao["name"]];
 
-    // We use the same number of periods for each of graphs
-    let num_total_periods = data_dao["average_voting_rates"].length
-    let num_periods = over_time_header.length - 1
-
-    for (let i = num_total_periods - num_periods; i < num_total_periods; i++) {
-      data_avr_over_time_dao.push(data_dao["average_voting_rates"][i]);
-      data_inverse_gini_over_time_dao.push(data_dao["average_inverse_ginis"][i]);
-      if (i < data_dao["average_prices"].length) {
-        data_price_over_time_dao.push(data_dao["average_prices"][i]);
-      }
-      if (i < data_dao["average_volumes"].length) {
-        data_volume_over_time_dao.push(data_dao["average_volumes"][i]);
-      }
-    }
     if (parseInt(data_dao["onchain"]) == 0) {
+      // We use the same number of periods for each of graphs
+      let num_total_periods = data_dao["average_voting_rates"].length
+      let num_periods = over_time_header.length - 1
+
+      for (let i = num_total_periods - num_periods; i < num_total_periods; i++) {
+        data_avr_over_time_dao.push(data_dao["average_voting_rates"][i]);
+        data_inverse_gini_over_time_dao.push(data_dao["average_inverse_ginis"][i]);
+        if (i < data_dao["average_prices"].length) {
+          data_price_over_time_dao.push(data_dao["average_prices"][i]);
+        }
+        if (i < data_dao["average_volumes"].length) {
+          data_volume_over_time_dao.push(data_dao["average_volumes"][i]);
+        }
+      }
       data_avr_over_time.push(data_avr_over_time_dao);
       data_inverse_gini_over_time.push(data_inverse_gini_over_time_dao);
-    }
 
-    // Not all DAOs have available market data
-    if (data_price_over_time_dao.length - 1 == num_periods && parseInt(data_dao["onchain"]) == 0) {
-      data_price_over_time.push(data_price_over_time_dao);
-    }
-    if (data_volume_over_time_dao.length - 1 == num_periods && parseInt(data_dao["onchain"]) == 0) {
-      data_volume_over_time.push(data_volume_over_time_dao);
-    }
-
-    if (data_dao["components"].length == 2) {
-      let components = []
-      for (let j = 0; j < 2; j++) {
-        components.push(data_dao["components"][j])
+      // Not all DAOs have available market data
+      if (data_price_over_time_dao.length - 1 == num_periods && parseInt(data_dao["onchain"]) == 0) {
+        data_price_over_time.push(data_price_over_time_dao);
       }
-      components.push(data_dao["name"])
-      data_components.push(components);
+      if (data_volume_over_time_dao.length - 1 == num_periods && parseInt(data_dao["onchain"]) == 0) {
+        data_volume_over_time.push(data_volume_over_time_dao);
+      }
+
+      if (data_dao["components"].length == 2) {
+        let components = []
+        for (let j = 0; j < 2; j++) {
+          components.push(data_dao["components"][j])
+        }
+        components.push(data_dao["name"])
+        data_components.push(components);
+      }
     }
   }
 
@@ -512,6 +569,8 @@ function drawGraphs() {
   graphVolumeOverTime(data_volume_over_time);
   graphPrincipalComponents(data_components);
   graphVotingShares(data_avs);
+  graphTopTenPower(data_top_ten_power)
+  graphYesVoteShares(data_yes_vote_shares)
 }
 
 // Load the Visualization API and the corechart package.
